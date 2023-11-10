@@ -10,7 +10,7 @@ function RegForm() {
     // this will prevent browser from reloading
     e.preventDefault();
     const config = {
-      url: "http://localhost:3000/reg-verified",
+      url:process.env.REACT_APP_REDIRECT_URL,
       handleCodeInApp: true,
     };
     await auth.sendSignInLinkToEmail(email, config);

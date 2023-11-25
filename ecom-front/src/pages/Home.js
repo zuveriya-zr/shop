@@ -1,8 +1,30 @@
 import React from 'react'
+import BannerSlide from '../component/home/BannerSlide'
+import { Breadcrumbs } from '@material-tailwind/react'
+import { Link } from 'react-router-dom'
+import NewArrival from '../component/home/NewArrival'
+import BestSeller from '../component/home/BestSeller'
 
 const Home = () => {
   return (
-    <div className='text-center bg-gray-300 h-[50px]'>This is Home Page</div>
+    <>
+    <div className='absolute z-1 text-center m-1  px-3 py-1 rounded-md h-[35px]'>
+    <Breadcrumbs className='bg-white'>
+     <Link to='/'>Home</Link>
+  
+    </Breadcrumbs>
+    </div>
+   <section>
+   <BannerSlide />
+   </section>
+   <section>
+    <NewArrival/>
+   </section>
+   <hr/>
+   <section>
+    <BestSeller />
+   </section>
+    </>
   )
 }
 

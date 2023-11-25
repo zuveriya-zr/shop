@@ -6,14 +6,23 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ThemeProvider } from "@material-tailwind/react";
 import 'react-toastify/dist/ReactToastify.css';
+import {legacy_createStore as createStore} from 'redux'
+import { Provider } from "react-redux";
+import {composeWithDevTools} from 'redux-devtools-extension'
+import rootReducer from "./reducers";
+
+
+const store= createStore(rootReducer,composeWithDevTools())
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <Router>
+  <Provider store={store}>
+    <Router>
     <ThemeProvider>
       <App />
     </ThemeProvider>
   </Router>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

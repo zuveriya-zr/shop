@@ -1,4 +1,4 @@
-const SubCat = require('../models/subcategory')
+const SubCat = require('../models/sub')
 const slugify = require('slugify')
 
 // CREATING CATEGORY 

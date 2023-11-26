@@ -15,7 +15,9 @@ router.get('/category/:slug',read)
 //list all the category
 router.get('/categories',list)
 
-
+//get sub cat based on parent cat
+router.get('/category/subs/:_id',getSubs)
+ 
 //create cat
 router.post('/category',authChecking, adminCheck,create)
 
@@ -25,7 +27,5 @@ router.put('/category/:slug',authChecking, adminCheck,update)
 // delete the cat
 router.delete('/category/:slug',authChecking, adminCheck,remove)
 
-//get sub cat based on parent cat
-router.get('/category/subs/:_id',getSubs)
- 
+
 module.exports = router

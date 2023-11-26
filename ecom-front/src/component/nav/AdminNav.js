@@ -9,35 +9,53 @@ import {
     Chip,
   } from "@material-tailwind/react";
   import {
-    PresentationChartBarIcon,
+    ClipboardDocumentCheckIcon,
     ShoppingBagIcon,
-    UserCircleIcon,
-    InboxIcon,
-    PowerIcon,
+    ArrowLeftOnRectangleIcon,
+    HeartIcon,
+    Squares2X2Icon,
+    SquaresPlusIcon,
+    BuildingStorefrontIcon
   } from "@heroicons/react/24/solid";
-  import {Link} from 'react-router-dom' 
-
+  import {Link, useNavigate} from 'react-router-dom' 
+import { useDispatch } from 'react-redux';
+import firebase from "firebase/compat/app";
 
   const AdminNav = () =>{
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    //get the data from the state
+  
+  
+    const handleLogout = () => {
+      //logging out the user using firebase
+      firebase.auth().signOut();
+      //changing the state og logout action
+      dispatch({
+        type: "LOGOUT",
+        payload: null,
+      });
+      navigate("/login");
+    };
     return (
       <Card className="h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
         <div className="mb-2 p-4">
-          <Typography variant="h5" color="blue-gray">
+        <Link to='/admin-dash'>  <Typography pography variant="h5" color="blue-gray">
             Admin Dashboard
-          </Typography>
+          </Typography></Link>
         </div>
         <List>
         <Link to='/admin-dash/category'>
           <ListItem>
             <ListItemPrefix>
-              <PresentationChartBarIcon className="h-5 w-5" />
+              <Squares2X2Icon className="h-5 w-5" />
             </ListItemPrefix>
             Category
           </ListItem></Link>
           <Link to='/admin-dash/sub'>
           <ListItem>
             <ListItemPrefix>
-              <PresentationChartBarIcon className="h-5 w-5" />
+              <SquaresPlusIcon className="h-5 w-5" />
             </ListItemPrefix>
             {/* create product */}
             Sub Category
@@ -45,14 +63,14 @@ import {
           <Link to='/admin-dash/product'>
           <ListItem>
             <ListItemPrefix>
-              <PresentationChartBarIcon className="h-5 w-5" />
+              <BuildingStorefrontIcon className="h-5 w-5" />
             </ListItemPrefix>
             {/* Creatng  the product */}
             Add Product
           </ListItem> </Link>
           <ListItem>
             <ListItemPrefix>
-              <InboxIcon className="h-5 w-5" />
+              <ClipboardDocumentCheckIcon className="h-5 w-5" />
             </ListItemPrefix>
             Orders
             <ListItemSuffix>
@@ -61,7 +79,7 @@ import {
           </ListItem>
           <ListItem>
             <ListItemPrefix>
-              <UserCircleIcon className="h-5 w-5" />
+              <HeartIcon className="h-5 w-5" />
             </ListItemPrefix>
             Wishlist
           </ListItem>
@@ -71,9 +89,9 @@ import {
             </ListItemPrefix>
             <Link to='/user-dash/pass'>Password</Link>
           </ListItem>
-          <ListItem>
+          <ListItem   onClick={handleLogout}>
             <ListItemPrefix>
-              <PowerIcon className="h-5 w-5" />
+              <ArrowLeftOnRectangleIcon className="h-5 w-5" />
             </ListItemPrefix>
             Log Out
           </ListItem>

@@ -12,6 +12,7 @@ import { createProd } from "../../../functions/prod-f";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { getCatSubs, getCatgeories } from "../../../functions/cat-f";
+import FileUpload from "./FileUpload";
 const initialState = {
   title: "",
   description: "",
@@ -26,63 +27,63 @@ const initialState = {
 
 const ProdCreate = () => {
   const [values, setValues] = useState(initialState);
-  const [showSub, setShowSub] = useState(false);
-  const { user } = useSelector((state) => ({ ...state }));
-
-  const [subOptions, setSubOptions] = useState([]);
   const {
     title,
     description,
     price,
-    category,
     categories,
+    category,
     subs,
     shipping,
     quantity,
     images,
   } = values;
 
+  const [subOptions, setSubOptions] = useState([]);
+  const [showSub, setShowSub] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  // redux
+  const { user } = useSelector((state) => ({ ...state }));
+
   useEffect(() => {
-    allCatLoad();
+    loadCategories();
   }, []);
 
-  const allCatLoad = () =>
-    getCatgeories()
-      .then((res) => setValues({ ...values, categories: res.data }))
-      .catch((err) => console.log("err in backend geting all cat", err));
+  const loadCategories = () =>
+    getCatgeories().then((c) => setValues({ ...values, categories: c.data }));
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setLoading(true)
+    createProd(values, user.token)
+      .then((res) => {
+        setLoading(false)
+        console.log("backend prod api ==>", res);
+        toast.success(`${res.data.title} is created..!!`);
+        window.location.reload();
+      })
+      .catch((err) => {
+        setLoading(false)
+        console.log("prod create backend error ==>", err);
+        toast.error(err.response.data.err);
+      });
+  };
   const handleChange = (e) => {
-    // title => laptop
     setValues({ ...values, [e.target.name]: e.target.value });
+    // console.log(e.target.name, " ----- ", e.target.value);
   };
 
   const handleCatChange = (e) => {
     e.preventDefault();
     console.log("CLICKED CATEGORY", e.target.value);
     setValues({ ...values, subs: [], category: e.target.value });
-    //geting cat
     getCatSubs(e.target.value).then((res) => {
       console.log("SUB OPTIONS ON CATGORY CLICK", res);
       setSubOptions(res.data);
       setShowSub(true);
-    })
-    .catch((err)=> console.log(err.message))
-    
+    });
   };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    createProd(values, user.token)
-      .then((res) => {
-        console.log("backend prod api ==>", res);
-        toast.success(`${res.data.title} is created..!!`);
-        window.location.reload();
-      })
-      .catch((err) => {
-        console.log("prod create backend error ==>", err);
-        toast.error(err.response.data.err);
-      });
-  };
-
   return (
     <div className="container-fluid d-flex space-x-2">
       <div className="user_nav">
@@ -90,14 +91,17 @@ const ProdCreate = () => {
       </div>
       <div className="container  ">
         <Card color="transparent" shadow={false}>
-          <Typography
+        {loading ? (<h3 className="text-center text-danger text-xl">Loading....</h3>) : (  <Typography
             className="text-center w-[50%] mx-auto rounded-md bg-yellow-100 p-2 my-2"
             variant="h4"
             color="blue-gray"
           >
             Add New Product
-          </Typography>
-
+          </Typography>)}
+          {/* {JSON.stringify(values.images)} */}
+          {/* **************** file upload ************** */}
+          <FileUpload values={values} setValues={setValues} setLoading={setLoading} />
+          
           <form onSubmit={handleSubmit} className="mt-8 mb-2 w-[70%] mx-auto">
             <div className="mb-1 flex flex-col gap-6">
               <Typography variant="h6" color="blue-gray" className="-mb-3">
@@ -155,18 +159,20 @@ const ProdCreate = () => {
                     </option>
                   ))}
               </select>
+              <Typography variant="h6" color="blue-gray" className="-mb-3">
+                Select Sub Category
+              </Typography>
               {showSub && (
                 <div>
                   <Select
-                    placeholder="Please Select"
+                    multiple
+                    style={{ width: "100%" }}
+                    label="Please Select"
                     value={subs}
-                    onChangeCapture={(value) =>
-                      setValues({ ...values, subs: value })
-                    }
-                    name="category"
-                    className="form-control"
+                    onChange={(value) => setValues({ ...values, subs: value })}
                   >
-                    {subOptions.length > 0 &&
+                    {subOptions &&
+                      subOptions.length !== 0 &&
                       subOptions.map((s) => (
                         <Option key={s._id} value={s._id}>
                           {s.name}
@@ -175,7 +181,6 @@ const ProdCreate = () => {
                   </Select>
                 </div>
               )}
-              {/* {JSON.stringify(values.subs)} */}
 
               <Typography variant="h6" color="blue-gray" className="-mb-3">
                 Quantity

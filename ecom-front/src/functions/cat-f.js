@@ -47,6 +47,5 @@ export const createCat =async (category,authtoken) =>{
 }
 
 // get sub cat based on parent category
-export const getCatSubs =async (_id) =>{
-     await axios.get(`${process.env.REACT_APP_API}/category/subs/${_id}` )
-}
+export const getCatSubs =async (_id) =>
+   await axios.get(`${process.env.REACT_APP_API}/category/subs/${_id}` )

@@ -19,3 +19,16 @@ res.json(newProd)
         res.status(400).send("creating Product failed..!!")
     }
 }
+
+
+// list all the products
+exports.listAllProd = async(req,res) =>{
+    const products= await Product.find({})
+    .limit(parseInt(req.params.count))
+    .populate('category')
+    .populate('subs')
+    .sort([['createdAt','desc']])
+
+    res.json(products)
+}
+

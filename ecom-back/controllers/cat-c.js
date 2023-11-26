@@ -1,6 +1,7 @@
 const Category = require('../models/category')
 const slugify = require('slugify')
-const SubCat = require('../models/subcategory')
+const SubCat = require('../models/sub')
+
 // CREATING CATEGORY 
 exports.create = async (req, res) => {
     try{
@@ -62,19 +63,15 @@ res.json(deleted)
 }
 
 //to get sub cat based on parent
-exports.getSubs =async (req,res)=>{
- const result= await SubCat.find({parent:req.params._id})
-    try{
-
-    res.json(result)
-    console.log("geting sub based on cat ==>",result)
-}
-catch(err){
-       console.log(err)
-       res.json({
-        err:"Err in subs"
-       })
-    
-    }
-
-}
+exports.getSubs =async (req, res) => {
+  const subs =await  SubCat.find({ parent: req.params._id })
+ try{
+    if(subs){
+    res.json(subs)
+    console.log("sub===>",subs)}
+ }
+ catch(err){
+    console.log("sub err ===>",err)
+ }
+  };
+  

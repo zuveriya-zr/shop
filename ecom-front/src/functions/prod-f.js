@@ -10,3 +10,7 @@ export const createProd =async (product,authtoken) =>{
       
       )
 }
+
+// display products with count limit
+export const getAllProds =async (count) =>
+   await axios.get(`${process.env.REACT_APP_API}/products/${count}` )

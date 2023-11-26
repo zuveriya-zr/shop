@@ -10,11 +10,11 @@ exports.createUpdateUser = async (req, res) => {
   if (user) {
     // updating user
     res.json(user);
-    console.log("USER UPDATED SUCCESSFULY==>", user);
+    // console.log("USER UPDATED SUCCESSFULY==>", user);
   } else {
     // creating user
     const newUser = await new User({ email, name:email.split('@')[0]  }).save();
-    console.log("USER CREATED SUCCESSFULY==>", newUser);
+    // console.log("USER CREATED SUCCESSFULY==>", newUser);
     res.json(newUser);
   }
 };
@@ -24,7 +24,7 @@ exports.createUpdateUser = async (req, res) => {
 exports.currentUser = async(req,res)=>{
   //to get one single data or user data we will be using findone
 const user= await User.findOne({email:req.user.email})
-console.log("current user Email==>",user)
+// console.log("current user Email==>",user)
 try{
 if(user) res.json(user)
 }catch(err){

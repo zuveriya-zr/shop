@@ -6,6 +6,7 @@ import { Button, Input, Typography } from "@material-tailwind/react";
 import { createCat, getCatgeories,removeCat } from "../../../functions/cat-f";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
+import Loader from "../../../component/Loader";
 const CatCreate = () => {
   const [name, setName] = useState("");
   const [categories, setCategories] = useState([]);
@@ -74,7 +75,7 @@ const searched = (keyword)=>(c)=>  c.name.toLowerCase().includes(keyword)
       </div>
       <div className="user_dash container-fluid ">
         {loading ? (
-          <p className="text-danger font-bold text-xl">Loading....</p>
+          <Loader />
         ) : (
           <p className="text-xl font-bold">Category Page</p>
         )}

@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { getCatSubs, getCatgeories } from "../../../functions/cat-f";
 import FileUpload from "./FileUpload";
+import Loader from "../../../component/Loader";
 const initialState = {
   title: "",
   description: "",
@@ -91,7 +92,7 @@ const ProdCreate = () => {
       </div>
       <div className="container  ">
         <Card color="transparent" shadow={false}>
-        {loading ? (<h3 className="text-center text-danger text-xl">Loading....</h3>) : (  <Typography
+        {loading ? (<Loader />) : (  <Typography
             className="text-center w-[50%] mx-auto rounded-md bg-yellow-100 p-2 my-2"
             variant="h4"
             color="blue-gray"

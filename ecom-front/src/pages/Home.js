@@ -8,11 +8,7 @@ import BestSeller from '../component/home/BestSeller'
 const Home = () => {
   return (
     <>
-    <div className='absolute z-1 text-center m-1  px-3 py-1 rounded-md h-[35px]'>
-    <Breadcrumbs className='bg-white'>
-     <Link to='/'>Home</Link>
-  
-    </Breadcrumbs>
+    <div className=' z-1 text-center m-1  px-3 py-1 rounded-md h-[35px]'>
     </div>
    <section>
    <BannerSlide />

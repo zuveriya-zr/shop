@@ -14,11 +14,18 @@ import AdminDash from "./pages/admin/AdminDash";
 import UserRoutes from "./component/routes/UserRoutes";
 import AdminRoutes from "./component/routes/AdminRoutes";
 import Password from "./pages/user/Password";
+import AdminPass from "./pages/admin/AdminPass";
 import CatCreate from "./pages/admin/category/CatCreate";
 import CatUpdate from "./pages/admin/category/CatUpdate";
 import SubCatCreate from "./pages/admin/category/SubCatCreate";
 import SubUpdate from "./pages/admin/category/SubUpdate";
 import ProdCreate from "./pages/admin/product/ProdCreate";
+import Shop from "./pages/Shop";
+import Checkout from "./pages/Checkout";
+import Orders from "./pages/admin/order/Orders";
+import Footer from "./component/nav/Footer";
+import NewArrival from "./component/home/NewArrival";
+import BestSeller from "./component/home/BestSeller";
 
 function App() {
   const dispatch = useDispatch();
@@ -63,6 +70,10 @@ function App() {
           <Route path="/reg-verified" element={<RegVerified />} />
           <Route path="/login" element={<Login />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/new-arrival" element={<NewArrival />} />
+          <Route path="/best-seller" element={<BestSeller />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/checkout" element={<Checkout />} />
           
           {/* //userRoute */}
          <Route exact path='/user-dash' element={<UserRoutes/>}>
@@ -72,14 +83,17 @@ function App() {
           {/* //admin route */}
           <Route exact path="/admin-dash" element={<AdminRoutes />}>
             <Route exact path="/admin-dash" element={<AdminDash />} />
+            <Route exact path="/admin-dash/password" element={<AdminPass />} />
             <Route exact path="/admin-dash/category" element={<CatCreate />} />
             <Route exact path="/admin-dash/category/:slug" element={<CatUpdate />} />
             <Route exact path="/admin-dash/sub" element={<SubCatCreate />} />
             <Route exact path="/admin-dash/sub/:slug" element={<SubUpdate />} />
             <Route exact path="/admin-dash/product" element={<ProdCreate />} />
+            <Route exact path="/admin-dash/orders" element={<Orders />} />
           </Route>
         </Routes>
       </Fragment>
+      <Footer />
     </div>
   );
 }

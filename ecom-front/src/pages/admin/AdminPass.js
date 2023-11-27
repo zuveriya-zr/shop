@@ -3,8 +3,8 @@ import {auth} from '../../firebase'
 import {toast} from 'react-toastify'
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/solid'
 import { Button, Input, Typography } from '@material-tailwind/react'
-import UserNav from '../../component/nav/UserNav'
-const Password = () => {
+import AdminNav from '../../component/nav/AdminNav'
+const AdminPass = () => {
 const [password,setPassword] = useState("")
 const [loading,setLoading] = useState(false)
 const [passwordType, setPasswordType] = useState("password");
@@ -34,10 +34,11 @@ const handleSubmit = async (e) =>{
 
 
   return (
-    <div className='container-fluid d-flex space-x-2'>
-       <div className="user_nav">
-        <UserNav />
-      </div>
+    <div className="container-fluid d-flex  space-x-2">
+
+<div className="w-[20%]">
+<AdminNav />
+</div>
         <form onSubmit={handleSubmit} className="w-[300px] h-[200px] bg-gray-50 rounded-md shadow-xl sm:w-[350px] md:w-[450px] p-3 my-4 mx-auto ">
     <Typography
       variant="small"
@@ -82,4 +83,4 @@ const handleSubmit = async (e) =>{
   )
 }
 
-export default Password
+export default AdminPass

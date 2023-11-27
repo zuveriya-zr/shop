@@ -16,6 +16,7 @@ import {
 } from "../../../functions/sub-f";
 
 import { useNavigate, useParams } from "react-router-dom";
+import Loader from "../../../component/Loader";
 const SubUpdate = () => {
   const [name, setName] = useState("");
   const [parent, setParent] = useState("");
@@ -67,7 +68,7 @@ const SubUpdate = () => {
       </div>
       <div className="user_dash container-fluid ">
         {loading ? (
-          <p className="text-danger font-bold text-xl">Loading....</p>
+          <Loader />
         ) : (
           <p className="text-xl font-bold">Sub Category Update Page</p>
         )}

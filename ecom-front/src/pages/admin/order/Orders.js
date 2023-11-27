@@ -1,9 +1,9 @@
 import React, {useEffect,useState} from 'react'
-import AdminNav from '../../component/nav/AdminNav'
-import {getAllProds} from '../../functions/prod-f'
-import AllProduct from './product/AllProduct'
+
 import { Card, CardBody, CardHeader, Typography } from '@material-tailwind/react'
-const AdminDash = () => {
+import AdminNav from '../../../component/nav/AdminNav'
+import { getAllProds } from '../../../functions/prod-f'
+const Orders = () => {
 const [products,setProducts] = useState([])
 const [loading,setLoading]=useState(false)
 const TABLE_HEAD = ["Product", "Price", "Shipping", "Quantity", ""];
@@ -51,12 +51,7 @@ setProducts(res.data)
           </tr>
         </thead>
         <tbody>
-{products.map((product) => (
-                <AllProduct key={product._id}
-                  product={product}
-                
-                />           
-            ))}     
+   orders table
             </tbody>
           </table></CardBody></Card>
 </div>
@@ -65,4 +60,4 @@ setProducts(res.data)
   )
 }
 
-export default AdminDash
+export default Orders

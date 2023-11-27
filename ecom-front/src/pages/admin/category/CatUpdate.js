@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { Button, Input, Typography } from "@material-tailwind/react";
 import {  getSingleCat,updateCat } from "../../../functions/cat-f";
 import { useNavigate, useParams } from "react-router-dom";
+import Loader from "../../../component/Loader";
 const CatUpdate = () => {
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
@@ -54,7 +55,7 @@ let navigate=useNavigate()
       </div>
       <div className="user_dash container-fluid ">
         {loading ? (
-          <p className="text-danger font-bold text-xl">Loading....</p>
+          <Loader />
         ) : (
           <p className="text-xl  text-center font-bold">Category Update Page</p>
         )}

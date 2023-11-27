@@ -38,17 +38,17 @@ import firebase from "firebase/compat/app";
       navigate("/login");
     };
     return (
-      <Card className="h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
+      <Card className="  h-auto w-full  p-4 shadow-xl shadow-blue-gray-900/5">
         <div className="mb-2 p-4">
         <Link to='/admin-dash'>  <Typography pography variant="h5" color="blue-gray">
             Admin Dashboard
           </Typography></Link>
         </div>
-        <List>
+        <List className='md:grid-cols-1 grid grid-cols-3' >
         <Link to='/admin-dash/category'>
           <ListItem>
             <ListItemPrefix>
-              <Squares2X2Icon className="h-5 w-5" />
+              <Squares2X2Icon className="md:flex hidden h-5 w-5" />
             </ListItemPrefix>
             Category
           </ListItem></Link>
@@ -68,26 +68,20 @@ import firebase from "firebase/compat/app";
             {/* Creatng  the product */}
             Add Product
           </ListItem> </Link>
+          <Link to='/admin-dash/orders'>
           <ListItem>
             <ListItemPrefix>
               <ClipboardDocumentCheckIcon className="h-5 w-5" />
             </ListItemPrefix>
             Orders
-            <ListItemSuffix>
-              <Chip value="14" size="sm" variant="ghost" color="blue-gray" className="rounded-full" />
-            </ListItemSuffix>
-          </ListItem>
-          <ListItem>
-            <ListItemPrefix>
-              <HeartIcon className="h-5 w-5" />
-            </ListItemPrefix>
-            Wishlist
-          </ListItem>
+          
+          </ListItem></Link>
+         
           <ListItem>
             <ListItemPrefix>
               <ShoppingBagIcon className="h-5 w-5" />
             </ListItemPrefix>
-            <Link to='/user-dash/pass'>Password</Link>
+            <Link to='/admin-dash/password'>Password</Link>
           </ListItem>
           <ListItem   onClick={handleLogout}>
             <ListItemPrefix>

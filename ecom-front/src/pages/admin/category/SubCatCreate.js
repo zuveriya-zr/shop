@@ -13,6 +13,7 @@ import { getCatgeories } from "../../../functions/cat-f";
 import { getSubs, createSub, removeSub } from "../../../functions/sub-f";
 import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
+import Loader from "../../../component/Loader";
 const SubCatCreate = () => {
   const [name, setName] = useState("");
   const [category, setCategory] = useState("");
@@ -22,14 +23,14 @@ const SubCatCreate = () => {
   const [keyword, setKeyword] = useState("");
   useEffect(() => {
     allCatLoad();
-    getSubs();
+    allSubLoad();
   }, []);
 
   const allCatLoad = () =>
     getCatgeories()
       .then((res) => setCategories(res.data))
       .catch((err) => console.log("err in backend geting all cat", err));
-
+      const allSubLoad = () =>
       getSubs()
       .then((res) => setSubs(res.data))
       .catch((err) => console.log("err in backend geting all sub cat", err));
@@ -87,7 +88,7 @@ const SubCatCreate = () => {
       </div>
       <div className="user_dash container-fluid ">
         {loading ? (
-          <p className="text-danger font-bold text-xl">Loading....</p>
+          <Loader />
         ) : (
           <p className="text-xl font-bold">Sub Category Page</p>
         )}

@@ -15,10 +15,26 @@ import {
     InboxIcon,
     PowerIcon,
   } from "@heroicons/react/24/solid";
-  import {Link} from 'react-router-dom' 
+  import {Link, useNavigate} from 'react-router-dom' 
+  import { useDispatch } from 'react-redux';
+  import firebase from "firebase/compat/app";
+   
 
 
   const UserNav = () =>{
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+     
+    const handleLogout = () => {
+      //logging out the user using firebase
+      firebase.auth().signOut();
+      //changing the state og logout action
+      dispatch({
+        type: "LOGOUT",
+        payload: null,
+      });
+      navigate("/login");
+    };
     return (
       <Card className="h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
         <div className="mb-2 p-4">
@@ -55,7 +71,7 @@ import {
             Wishlist
           </ListItem>
           
-          <ListItem>
+          <ListItem onClick={handleLogout}>
             <ListItemPrefix>
               <PowerIcon className="h-5 w-5" />
             </ListItemPrefix>

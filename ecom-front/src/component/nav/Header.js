@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
 import { Typography, Button, Menu,
   MenuHandler,
   MenuList,
@@ -6,11 +6,12 @@ import { Typography, Button, Menu,
 import firebase from "firebase/compat/app";
 import { useNavigate, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import SideMenu from "./SideMenu";
+import { HeartIcon, ShoppingCartIcon } from "@heroicons/react/24/solid";
 
 function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  
   //get the data from the state
 
   const { user } = useSelector((state) => ({ ...state }));
@@ -34,40 +35,34 @@ function Header() {
             Ecom-Shop
           </p>
         </Link>
-        <div className="md:flex hidden flex-1  text-center">
-       <span className="d-flex flex-1 justify-center ">
+        <div className="flex flex-1  text-center">
+       {/* <span className="d-flex flex-1 justify-center ">
        <Menu>
       <MenuHandler>
-        <Typography className="cursor-pointer mx-5 bg-white border-2 border-gray-300 rounded-md shadow-md  w-24 ">List</Typography>
+        <Typography className="cursor-pointer mx-5 bg-white border-2 border-gray-300 rounded-md shadow-md px-2 py-1 ">Categories</Typography>
       </MenuHandler>
       <MenuList>
-        <MenuItem>Menu Item 1</MenuItem>
-        <MenuItem>Menu Item 2</MenuItem>
-        <MenuItem>Menu Item 3</MenuItem>
+        {categories.length >0 && categories.map((c) => (
+        <Link to={`/category/:${c.name}`}>  <MenuItem key={c._id} value={c._id}>{c.name}</MenuItem></Link>
+        ))}
       </MenuList>
     </Menu>
     <Menu>
       <MenuHandler>
-        <Typography className="cursor-pointer mx-5 bg-white border-2 border-gray-300 rounded-md shadow-md  w-24 ">List</Typography>
+        <Typography className="cursor-pointer mx-5 bg-white border-2 border-gray-300 rounded-md shadow-md px-2 py-1  ">Sub Categories</Typography>
       </MenuHandler>
       <MenuList>
-        <MenuItem>Menu Item 1</MenuItem>
-        <MenuItem>Menu Item 2</MenuItem>
-        <MenuItem>Menu Item 3</MenuItem>
+      {subs.length >0 && subs.map((s) => (
+        <Link to={`/category/:${s.name}`}>  <MenuItem key={s._id} value={s._id}>{s.name}</MenuItem></Link>
+        ))}
       </MenuList>
     </Menu>
-    <Menu>
-      <MenuHandler>
-      <Typography className="cursor-pointer mx-5 bg-white border-2 border-gray-300 rounded-md shadow-md  w-24 ">List</Typography>
-      </MenuHandler>
-      <MenuList>
-        <MenuItem>Menu Item 1</MenuItem>
-        <MenuItem>Menu Item 2</MenuItem>
-        <MenuItem>Menu Item 3</MenuItem>
-      </MenuList>
-    </Menu>
-       </span>
-
+   
+       </span> */}
+        <span className="d-flex flex-1 justify-end ">
+       <Link to='/cart'><Button className='d-flex  h-10 text-black shadow-none  bg-transparent' size='sm' >  <ShoppingCartIcon className='h-5 ml-1' /></Button></Link>
+       {/* <Link to='/wishlist'><Button className='d-flex  h-10 text-black shadow-none  bg-transparent' size='sm' >  <HeartIcon className='h-5 ml-1' /></Button></Link> */}
+       
           {!user && (
             <Link to="/login">
               <Button color="green" size="sm">
@@ -75,6 +70,8 @@ function Header() {
               </Button>
             </Link>
           )}
+         </span> 
+          
 {user && (
 <Menu
       animate={{
@@ -88,7 +85,8 @@ function Header() {
       <MenuList>
     {user.role === 'customer' &&     <Link style={{textDecoration:'none',outline:'none'}} to='/user-dash'><MenuItem>Profile</MenuItem></Link>}
     {user.role === 'admin' &&     <Link style={{textDecoration:'none',outline:'none'}} to='/admin-dash'><MenuItem>Admin Dash</MenuItem></Link>}
-        <MenuItem>Order</MenuItem>
+    {user.role === 'customer' &&     <Link style={{textDecoration:'none',outline:'none'}} to='/user-dash/order'><MenuItem>Order</MenuItem></Link>}
+    {user.role === 'admin' &&     <Link style={{textDecoration:'none',outline:'none'}} to='/admin-dash/orders'><MenuItem>Orders</MenuItem></Link>}
         <MenuItem  onClick={handleLogout}>Logout</MenuItem>
       </MenuList>
     </Menu>
@@ -96,7 +94,7 @@ function Header() {
    
           
         </div>
-        <SideMenu  />
+        
       </div>
     </div>
   );

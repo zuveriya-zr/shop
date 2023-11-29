@@ -5,15 +5,11 @@ import {
     List,
     ListItem,
     ListItemPrefix,
-    ListItemSuffix,
-    Chip,
   } from "@material-tailwind/react";
   import {
-    PresentationChartBarIcon,
-    ShoppingBagIcon,
-    UserCircleIcon,
     InboxIcon,
     PowerIcon,
+    KeyIcon,
   } from "@heroicons/react/24/solid";
   import {Link, useNavigate} from 'react-router-dom' 
   import { useDispatch } from 'react-redux';
@@ -43,15 +39,10 @@ import {
           </Typography>
         </div>
         <List>
+     
           <ListItem>
             <ListItemPrefix>
-              <PresentationChartBarIcon className="h-5 w-5" />
-            </ListItemPrefix>
-            Profile
-          </ListItem>
-          <ListItem>
-            <ListItemPrefix>
-              <ShoppingBagIcon className="h-5 w-5" />
+              <KeyIcon className="h-5 w-5" />
             </ListItemPrefix>
             <Link to='/user-dash/pass'>Password</Link>
           </ListItem>
@@ -61,17 +52,10 @@ import {
               <InboxIcon className="h-5 w-5" />
             </ListItemPrefix>
             Order
-            <ListItemSuffix>
-              <Chip value="14" size="sm" variant="ghost" color="blue-gray" className="rounded-full" />
-            </ListItemSuffix>
+            
           </ListItem>
         </Link>
-          <ListItem>
-            <ListItemPrefix>
-              <UserCircleIcon className="h-5 w-5" />
-            </ListItemPrefix>
-            Wishlist
-          </ListItem>
+         
           
           <ListItem onClick={handleLogout}>
             <ListItemPrefix>

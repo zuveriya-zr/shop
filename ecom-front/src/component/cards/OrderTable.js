@@ -6,7 +6,7 @@ import React from 'react'
   
   } from "@material-tailwind/react";
 import { Link } from 'react-router-dom';
-import { CheckBadgeIcon, XMarkIcon } from '@heroicons/react/24/solid';
+import { CheckBadgeIcon, CheckIcon, TruckIcon, XMarkIcon } from '@heroicons/react/24/solid';
 
 const OrderTable = ({order}) => {
 
@@ -52,16 +52,42 @@ const OrderTable = ({order}) => {
                  &#8377;  {p.product.price}
                  </Typography>
                </td>
+               <td className='text-left' >
+                 <Typography
+                   variant="small"
+                   color="blue-gray"
+                   className="text-lg font-bold text-center"
+                 >
+                   {p.product.quantity}
+                 </Typography>
+               </td>
+               
+                
                <td >
                 
                   
+   
 
-                  {order.orderStatus === "Not Processed" ? (
-                <span className='text-center ml-4 d-flex h-8 '><XMarkIcon className='h-8 w-8' style={{ color: "red" }} /> Not Processed</span>
-              ) : (
-                <CheckBadgeIcon  className='h-8 w-8' style={{ color: "green" }} />
-              )}
-                  
+               {order.orderStatus === "Not Processed" && (
+              <span className='text-center p-1 mx-4 d-flex h-8 '><XMarkIcon className='h-8 w-8 mx-1' style={{ color: "red" }} /> Not Processed</span>
+          
+                )}
+                 {order.orderStatus === "Cancelled" && (
+              <span className='text-center p-1 mx-4 d-flex h-8 '><XMarkIcon className='h-8 w-8 mx-1' style={{ color: "red" }} /> Cancelled</span>
+          
+                )}
+                 {order.orderStatus === "Processing" && (
+              <span className='text-center p-1 mx-4 d-flex h-8 '><CheckIcon className='h-8 w-8 mx-1' style={{ color: "orange" }} /> Processing</span>
+          
+                )}
+                 {order.orderStatus === "Dispatched" && (
+              <span className='text-center p-1 mx-4 d-flex h-8 '><TruckIcon className='h-8 w-8 mx-1' style={{ color: "black" }} /> Disptached</span>
+          
+                )}
+                  {order.orderStatus === "Completed" && (
+              <span className='text-center p-1 mx-4 d-flex h-8 '><CheckBadgeIcon className='h-8 w-8 mx-1' style={{ color: "green" }} /> Completed</span>
+          
+                )}
                  
                </td>
               

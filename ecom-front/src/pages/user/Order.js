@@ -1,12 +1,11 @@
 import React, {useEffect,useState} from 'react'
-import { Avatar, Card, CardBody, CardHeader, Typography } from '@material-tailwind/react'
+import {  Card, CardBody,  Typography } from '@material-tailwind/react'
 import UserNav from '../../component/nav/UserNav'
 import { useSelector } from 'react-redux'
 import { getUserOrders } from '../../functions/user-f'
 import OrderTable from '../../component/cards/OrderTable'
 const Order = () => {
-const [loading,setLoading]=useState(false)
-const TABLE_HEAD = ["Product", "Price","", "Shipping","",""];
+const TABLE_HEAD = ["Product", "Price", "Quantity","Status"];
 const [orders, setOrders] = useState([]);
 const { user } = useSelector((state) => ({ ...state }));
 
@@ -17,7 +16,7 @@ useEffect(() => {
 const loadUserOrders = () =>
   getUserOrders(user.token).then((res) => {
     console.log(JSON.stringify(res.data, null, 4));
-    setOrders(res.data);  
+    setOrders(res.data);
   });
  
 
@@ -36,7 +35,7 @@ const loadUserOrders = () =>
 <Card className="h-full w-full overflow-hidden">
 
   <CardBody  className="overflow-scroll px-0">
-  <table className="w-full min-w-max table-auto ">
+  <table className="w-full min-w-max text-center table-auto ">
         <thead>
           <tr>
             {TABLE_HEAD.map((head) => (

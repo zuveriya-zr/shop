@@ -2,10 +2,10 @@ import React, {useEffect,useState} from 'react'
 import AdminNav from '../../component/nav/AdminNav'
 import {getAllProds, removeProd} from '../../functions/prod-f'
 import AllProduct from './product/AllProduct'
-import { Card, CardBody, CardHeader, Typography } from '@material-tailwind/react'
+import { Card, CardBody,  Typography } from '@material-tailwind/react'
 import { useSelector } from 'react-redux'
 import {toast} from 'react-toastify'
-import { getUserOrders } from '../../functions/user-f'
+
 
 
 

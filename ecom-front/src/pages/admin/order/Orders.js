@@ -1,12 +1,12 @@
 import React, {useEffect,useState} from 'react'
 import { changeStatus, getOrders } from '../../../functions/admin-f'
-import { Card, CardBody, CardHeader, Typography } from '@material-tailwind/react'
+import { Card, CardBody,  Typography } from '@material-tailwind/react'
 import AdminNav from '../../../component/nav/AdminNav'
 import AdminOrderTable from '../../../component/cards/AdminOrderTable'
 import { useSelector } from 'react-redux'
 import {toast} from 'react-toastify'
 const Orders = ()=>{
-const [loading,setLoading]=useState(false)
+
 const [orders, setOrders] = useState([]);
 const { user } = useSelector((state) => ({ ...state }));
 

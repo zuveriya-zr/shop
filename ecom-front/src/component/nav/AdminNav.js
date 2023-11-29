@@ -5,17 +5,17 @@ import {
     List,
     ListItem,
     ListItemPrefix,
-    ListItemSuffix,
-    Chip,
+    
   } from "@material-tailwind/react";
   import {
     ClipboardDocumentCheckIcon,
-    ShoppingBagIcon,
+    
     ArrowLeftOnRectangleIcon,
-    HeartIcon,
+    
     Squares2X2Icon,
     SquaresPlusIcon,
-    BuildingStorefrontIcon
+    BuildingStorefrontIcon,
+    KeyIcon
   } from "@heroicons/react/24/solid";
   import {Link, useNavigate} from 'react-router-dom' 
 import { useDispatch } from 'react-redux';
@@ -79,7 +79,7 @@ import firebase from "firebase/compat/app";
          
           <ListItem>
             <ListItemPrefix>
-              <ShoppingBagIcon className="h-5 w-5" />
+              <KeyIcon className="h-5 w-5" />
             </ListItemPrefix>
             <Link to='/admin-dash/password'>Password</Link>
           </ListItem>

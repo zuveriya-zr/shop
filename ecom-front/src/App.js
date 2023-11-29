@@ -80,7 +80,7 @@ function App() {
           <Route path="/payment" element={<Payment />} />
           {/* //userRoute */}
          <Route exact path='/user-dash' element={<UserRoutes/>}>
-         <Route exact path="/user-dash" element={<UserDash />} />
+         <Route exact path="/user-dash" element={<Order />} />
          <Route exact path="/user-dash/pass" element={<Password />} />
          <Route exact path="/user-dash/order" element={<Order />} />
          

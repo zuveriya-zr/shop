@@ -8,6 +8,7 @@ const UserDash = () => {
       </div>
       <div className="user_dash text-center mx-auto ">
         <h1>User Dashboard</h1>
+        
       </div>
     </div>
   );

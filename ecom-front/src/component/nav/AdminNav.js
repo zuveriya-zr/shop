@@ -38,7 +38,7 @@ import firebase from "firebase/compat/app";
       navigate("/login");
     };
     return (
-      <Card className="  h-auto w-full  p-4 shadow-xl shadow-blue-gray-900/5">
+      <Card className="  h-full mb-4 w-full  p-4 shadow-xl shadow-blue-gray-900/5">
         <div className="mb-2 p-4">
         <Link to='/admin-dash'>  <Typography pography variant="h5" color="blue-gray">
             Admin Dashboard

@@ -55,7 +55,8 @@ import {
             </ListItemPrefix>
             <Link to='/user-dash/pass'>Password</Link>
           </ListItem>
-          <ListItem>
+        <Link to='/user-dash/order'>
+        <ListItem>
             <ListItemPrefix>
               <InboxIcon className="h-5 w-5" />
             </ListItemPrefix>
@@ -64,6 +65,7 @@ import {
               <Chip value="14" size="sm" variant="ghost" color="blue-gray" className="rounded-full" />
             </ListItemSuffix>
           </ListItem>
+        </Link>
           <ListItem>
             <ListItemPrefix>
               <UserCircleIcon className="h-5 w-5" />

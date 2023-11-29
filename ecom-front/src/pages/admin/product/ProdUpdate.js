@@ -8,13 +8,18 @@ import {
   Select,
   Option,
 } from "@material-tailwind/react";
-import { createProd } from "../../../functions/prod-f";
+import { createProd, getProduct, updateProd } from "../../../functions/prod-f";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { getCatSubs, getCatgeories } from "../../../functions/cat-f";
 import FileUpload from "./FileUpload";
 import Loader from "../../../component/Loader";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { getSub, getSubs } from "../../../functions/sub-f";
+
+
+
+
 const initialState = {
   title: "",
   description: "",
@@ -27,14 +32,12 @@ const initialState = {
   images: [],
 };
 
-const ProdCreate = () => {
+const ProdUpdate = () => {
   const [values, setValues] = useState(initialState);
-  const navigate =useNavigate()
   const {
     title,
     description,
     price,
-    categories,
     category,
     subs,
     shipping,
@@ -43,35 +46,68 @@ const ProdCreate = () => {
   } = values;
 
   const [subOptions, setSubOptions] = useState([]);
-  const [showSub, setShowSub] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [parent, setParent] = useState("");
+  const [sub, setSub] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const {slug} = useParams()
+const navigate= useNavigate()
   // redux
   const { user } = useSelector((state) => ({ ...state }));
 
   useEffect(() => {
     loadCategories();
+    loadProd()
+    allSubLoad()
+    
   }, []);
 
   const loadCategories = () =>
-    getCatgeories().then((c) => setValues({ ...values, categories: c.data }));
+    getCatgeories().then((c) =>setCategories( c.data ));
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setLoading(true)
-    createProd(values, user.token)
-      .then((res) => {
-        setLoading(false)
-        console.log("backend prod api ==>", res);
-        toast.success(`${res.data.title} is created..!!`);
-        navigate('/admin-dash')
+    const allSubLoad = () =>
+    getSubs()
+    .then((res) => setSubOptions(res.data))
+    .catch((err) => console.log("err in backend geting all sub cat", err));
+   
+   
+    // get single poduct
+    const loadProd = () =>
+    {
+      getProduct(slug)
+      .then((res)=> {
+        setValues({...values,...res.data})
+        console.log(res.data)
+        setParent(res.data.parent);
+        setSub(res.data.subs)
+        console.log(res.data.subs)
+       
       })
-      .catch((err) => {
-        setLoading(false)
-        console.log("prod create backend error ==>", err);
-        toast.error(err.response.data.err);
-      });
-  };
+      .catch((err)=> console.log("fetching all prod err ==>",err))
+    }
+   
+
+
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      setLoading(true);
+
+// pre populate category
+ values.category = parent ? parent: values.category
+ 
+ 
+
+      updateProd(slug, values, user.token)
+        .then((res) => {
+          setLoading(false);
+          toast.success(`${res.data.title} is updated..!!`);
+          navigate("/admin-dash");
+        })
+        .catch((err) => {
+          setLoading(false);
+          if (err.response.status === 400) toast.error(err.response.data);
+        });
+    };
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
     // console.log(e.target.name, " ----- ", e.target.value);
@@ -80,14 +116,16 @@ const ProdCreate = () => {
   const handleCatChange = (e) => {
     e.preventDefault();
     console.log("CLICKED CATEGORY", e.target.value);
-    setValues({ ...values, subs: [], category: e.target.value });
+    setValues({ ...values});
+    setParent(e.target.value)
+    setSub(e.target.value)
     getCatSubs(e.target.value).then((res) => {
-      console.log("SUB OPTIONS ON CATGORY CLICK", res);
+      console.log("SUB OPTIONS ON CATGORY CLICK", res.data);
       setSubOptions(res.data);
-      setShowSub(true);
+
+      
     });
   };
-  
   return (
     <div className="container-fluid d-flex space-x-2">
       <div className="user_nav">
@@ -100,7 +138,7 @@ const ProdCreate = () => {
             variant="h4"
             color="blue-gray"
           >
-            Add New Product
+            Update Product
           </Typography>)}
           {/* {JSON.stringify(values.images)} */}
           {/* **************** file upload ************** */}
@@ -155,7 +193,7 @@ const ProdCreate = () => {
                 className="form-control"
                 onChange={handleCatChange}
               >
-                <option>Please select</option>
+                <option>{category ? (category.name): ("Please Select")}</option>
                 {categories.length > 0 &&
                   categories.map((c) => (
                     <option key={c._id} value={c._id}>
@@ -164,27 +202,26 @@ const ProdCreate = () => {
                   ))}
               </select>
               <Typography variant="h6" color="blue-gray" className="-mb-3">
-                Select Sub Category
+      
               </Typography>
-              {showSub && (
-                <div>
-                  <Select
-                    multiple
-                    style={{ width: "100%" }}
-                    label="Please Select"
-                    value={subs}
-                    onChange={(value) => setValues({ ...values, subs: value })}
+              
+                 <div>
+                  <select
+                    className="border-3 border-gray-100 w-full rounded-md p-2"
+                    placeholder="Please Select"
+                    value={sub}
+                    onChange={(e) => setSub(e.target.value)}
                   >
                     {subOptions &&
                       subOptions.length !== 0 &&
                       subOptions.map((s) => (
-                        <Option key={s._id} value={s._id}>
+                        <option key={s._id} value={s._id}>
                           {s.name}
-                        </Option>
+                        </option>
                       ))}
-                  </Select>
-                </div>
-              )}
+                  </select>
+                </div> 
+              
 
               <Typography variant="h6" color="blue-gray" className="-mb-3">
                 Quantity
@@ -216,7 +253,7 @@ const ProdCreate = () => {
             </div>
 
             <Button type="submit" className="mt-6 bg-orange-300">
-              Add Product
+              Update Product
             </Button>
           </form>
         </Card>
@@ -225,4 +262,4 @@ const ProdCreate = () => {
   );
 };
 
-export default ProdCreate;
+export default ProdUpdate;

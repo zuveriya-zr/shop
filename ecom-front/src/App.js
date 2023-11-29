@@ -26,6 +26,9 @@ import Orders from "./pages/admin/order/Orders";
 import Footer from "./component/nav/Footer";
 import NewArrival from "./component/home/NewArrival";
 import BestSeller from "./component/home/BestSeller";
+import Order from "./pages/user/Order";
+import ProdUpdate from "./pages/admin/product/ProdUpdate";
+import Payment from "./pages/user/Payment";
 
 function App() {
   const dispatch = useDispatch();
@@ -74,11 +77,13 @@ function App() {
           <Route path="/best-seller" element={<BestSeller />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/checkout" element={<Checkout />} />
-          
+          <Route path="/payment" element={<Payment />} />
           {/* //userRoute */}
          <Route exact path='/user-dash' element={<UserRoutes/>}>
          <Route exact path="/user-dash" element={<UserDash />} />
          <Route exact path="/user-dash/pass" element={<Password />} />
+         <Route exact path="/user-dash/order" element={<Order />} />
+         
          </Route>
           {/* //admin route */}
           <Route exact path="/admin-dash" element={<AdminRoutes />}>
@@ -89,6 +94,7 @@ function App() {
             <Route exact path="/admin-dash/sub" element={<SubCatCreate />} />
             <Route exact path="/admin-dash/sub/:slug" element={<SubUpdate />} />
             <Route exact path="/admin-dash/product" element={<ProdCreate />} />
+            <Route exact path="/admin-dash/product/:slug" element={<ProdUpdate />} />
             <Route exact path="/admin-dash/orders" element={<Orders />} />
           </Route>
         </Routes>

@@ -12,14 +12,20 @@ const Shop = () => {
     listAllProd();
   }, []);
 
+ 
+useEffect(()=>{
+  listAllProd()
+  },[])
+  
   const listAllProd =()=>{
     getAllProds(10)
     .then((res)=> {
-      // console.log(res.data)
+      console.log(res.data)
   setProducts(res.data)
     })
     .catch((err)=> console.log("fetching all prod err ==>",err))
   }
+  
   return (
     <div className="container-fluid">
       
@@ -38,9 +44,10 @@ const Shop = () => {
           {products.length === 0 && <p>No products found</p>}
 
           <div className="row container mx-auto pb-5">
-          {products.map((p) => (
-              <div key={p._id} className="col-md-4 mt-3">
-                <ProductCard product={p} />
+          {products.map((product) => (
+              <div  className="col-md-4 mt-3">
+                <ProductCard key={product._id}
+                  product={product} />
               </div>
             ))}
           </div>

@@ -1,26 +1,15 @@
 import React from 'react'
-import {
-    MagnifyingGlassIcon,
-    ChevronUpDownIcon,
-  } from "@heroicons/react/24/outline";
-  import { EyeIcon,TrashIcon, PencilIcon, UserPlusIcon } from "@heroicons/react/24/solid";
-  import {
-    Card,
-    CardHeader,
-    Input,
-    Typography,
+    import {
+      Typography,
     Button,
-    CardBody,
-    Chip,
-    CardFooter,
-    Tabs,
-    TabsHeader,
-    Tab,
     Avatar,
-    IconButton,
-    Tooltip,
+  
   } from "@material-tailwind/react";
-const AllProduct = ({product}) => {
+import { Link } from 'react-router-dom';
+import { removeProd } from '../../../functions/prod-f';
+
+const AllProduct = ({product,handleRemove}) => {
+
   
     const { _id,title, price, images,shipping,quantity, slug } = product;
   return (
@@ -82,9 +71,8 @@ const AllProduct = ({product}) => {
                   </Typography>
                 </td>
                 <td>
-                    <Button size='sm' className='bg-blue-300 mx-2'>View</Button>
-                    <Button size='sm' className='bg-green-300 mx-2'>Edit</Button>
-                    <Button size='sm' className='bg-red-300 mx-2'>Delete</Button>
+                   <Link to={`/admin-dash/product/${slug}`}> <Button size='sm' className='bg-green-300 mx-2'>Edit</Button></Link>
+                    <Button onClick={()=>handleRemove(slug)} size='sm' className='bg-red-300 mx-2'>Delete</Button>
                 </td>
               </tr>
           

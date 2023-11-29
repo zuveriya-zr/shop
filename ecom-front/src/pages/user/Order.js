@@ -1,34 +1,27 @@
 import React, {useEffect,useState} from 'react'
-import { changeStatus, getOrders } from '../../../functions/admin-f'
-import { Card, CardBody, CardHeader, Typography } from '@material-tailwind/react'
-import AdminNav from '../../../component/nav/AdminNav'
-import AdminOrderTable from '../../../component/cards/AdminOrderTable'
+import { Avatar, Card, CardBody, CardHeader, Typography } from '@material-tailwind/react'
+import UserNav from '../../component/nav/UserNav'
 import { useSelector } from 'react-redux'
-import {toast} from 'react-toastify'
-const Orders = ()=>{
+import { getUserOrders } from '../../functions/user-f'
+import OrderTable from '../../component/cards/OrderTable'
+const Order = () => {
 const [loading,setLoading]=useState(false)
+const TABLE_HEAD = ["Product", "Price","", "Shipping","",""];
 const [orders, setOrders] = useState([]);
 const { user } = useSelector((state) => ({ ...state }));
 
 useEffect(() => {
-  loadOrders();
+  loadUserOrders();
 }, []);
 
-const loadOrders = () =>
-  getOrders(user.token).then((res) => {
+const loadUserOrders = () =>
+  getUserOrders(user.token).then((res) => {
     console.log(JSON.stringify(res.data, null, 4));
-    setOrders(res.data);
+    setOrders(res.data);  
   });
-
-const handleStatusChange = (orderId, orderStatus) => {
-  changeStatus(orderId, orderStatus, user.token).then((res) => {
-    toast.success("Status updated");
-    loadOrders();
-  });
-};
+ 
 
 
-const TABLE_HEAD = ["Product", "Price", "Shipping", "Status", ""];
 
 
 
@@ -36,14 +29,14 @@ const TABLE_HEAD = ["Product", "Price", "Shipping", "Status", ""];
     <div className="container-fluid d-flex  space-x-2">
 
 <div className="w-[20%]">
-<AdminNav />
+<UserNav />
 </div>
-<div className="w-[75%] h-full mb-4 text-center mx-auto ">
-<h1>Admin Dashboard</h1>
+<div className="w-[80%]  text-center mx-auto ">
+<h1>User Orders</h1>
 <Card className="h-full w-full overflow-hidden">
 
   <CardBody  className="overflow-scroll px-0">
-  <table className="w-full min-w-max table-auto text-center">
+  <table className="w-full min-w-max table-auto ">
         <thead>
           <tr>
             {TABLE_HEAD.map((head) => (
@@ -54,7 +47,7 @@ const TABLE_HEAD = ["Product", "Price", "Shipping", "Status", ""];
                 <Typography
                   variant="small"
                   color="blue-gray"
-                  className=" font-bold leading-none opacity-70"
+                  className=" font-bold text-left leading-none opacity-70"
                 >
                   {head}
                 </Typography>
@@ -62,10 +55,11 @@ const TABLE_HEAD = ["Product", "Price", "Shipping", "Status", ""];
             ))}
           </tr>
         </thead>
-        <tbody>
-        {orders.map((order,i)=>(
+        <tbody className='h-full w-full overflow-hidden'>
+        
+     {orders.map((order,i)=>(
          < >
-         <AdminOrderTable key={i} handleStatusChange={handleStatusChange}  order={order}  />
+         <OrderTable  key={i}  order={order}  />
          </>
      ))}
             </tbody>
@@ -76,4 +70,4 @@ const TABLE_HEAD = ["Product", "Price", "Shipping", "Status", ""];
   )
 }
 
-export default Orders
+export default Order
